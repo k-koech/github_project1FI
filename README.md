@@ -17,7 +17,7 @@
     - Search for a users and their repositories
 
 ## Live link
-Deployed project can be accessed here [Github Clone]()   
+Deployed project can be accessed here [Github Clone]("https://k-koech.github.io/github_project1FI/")   
 
 ## Known Bugs
     The application works perfectly well, no bugs.
