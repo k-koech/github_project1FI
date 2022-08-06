@@ -3,7 +3,12 @@ var username="kip";
 function getVal() 
 {
     username = document.querySelector('input').value;
+
     console.log("kip",username)
+    var profile_container = document.querySelector('.user-profile'); 
+    var repo_container = document.querySelector('.repo-row'); 
+    repo_container.innerHTML="";
+    profile_container.innerHTML="";
     getData(username)
 
 }
@@ -16,7 +21,7 @@ function getData(username) {
     .then(response => response.json())
     .then(user => {
         profile(user)
-        console.log(user)
+        console.log("user ",user.login)
     })
     .catch(err => console.error(err));
 
@@ -32,7 +37,24 @@ function getData(username) {
 
 function profile(user) 
 {
-    var profile_container = document.querySelector('.user-profile'); 
+
+    var profile_container = document.querySelector('.user-profile');
+    var user_error = document.querySelector('.user-error');
+
+    if(user.login==undefined){
+        profile_container.innerHTML=="xx";
+        console.log("HALLO")
+
+        var error = document.createElement('div')
+        error.classList.add("alert");
+        error.classList.add("alert-danger");
+        error.innerText="User Does not Exist";
+        user_error.append(error)
+    } 
+    else
+    {
+        // clear the error
+        user_error.innerHTML=""
     // creating a div to hold an image
     var profile_image_div = document.createElement("div");
         profile_image_div.classList.add("profile-image")
@@ -105,7 +127,7 @@ function profile(user)
 
     profile_container.append(profile_image_div, username_h4,username_paragraph, bio_h5,
         followers_paragraph, location_paragraph,hr, date_joined, date_updated )
-
+    }
     
 }
 
@@ -114,7 +136,20 @@ function profile(user)
 function repositories(repos)
 {
     var repos_badge = document.querySelector('.repos-badge')
-    repos_badge.innerText = repos.length
+    var error = document.querySelector('.error'); 
+    if(repos.length==undefined || repos.length==0)
+    {
+        repos_badge.innerText = 0 ; 
+        error.classList.add("alert-danger");
+        error.innerText="The user has no repository!"
+    }
+    else
+    {
+        var repo_container = document.querySelector('.repo-row');       
+        repos_badge.innerText = repos.length;
+        error.classList.remove("alert-danger");
+        error.innerText="";
+    }
 
 
     console.log("repos",repos)
